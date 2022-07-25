@@ -50,6 +50,44 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Error creating new user", e);
         }
     }
+    @Override
+    public User changeUsername(Long id, String changeUsernameTo){
+        String query = "UPDATE users SET username= ? WHERE id = ?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, changeUsernameTo);
+            stmt.setLong(2, id);
+            return extractUser(stmt.executeQuery());
+        }catch(SQLException e){
+            throw new RuntimeException("Error!!", e);
+        }
+    }
+
+    @Override
+    public User changeEmail(Long id, String changeEmailTo){
+        String query = "UPDATE users SET email= ? WHERE id = ?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, changeEmailTo);
+            stmt.setLong(2, id);
+            return extractUser(stmt.executeQuery());
+        }catch(SQLException e){
+            throw new RuntimeException("Error!!", e);
+        }
+    }
+
+    @Override
+    public User changePassword(Long id, String changePasswordTo){
+        String query = "UPDATE users SET password= ? WHERE id = ?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, changePasswordTo);
+            stmt.setLong(2, id);
+            return extractUser(stmt.executeQuery());
+        }catch(SQLException e){
+            throw new RuntimeException("Error!!", e);
+        }
+    }
 
     private User extractUser(ResultSet rs) throws SQLException {
         if (! rs.next()) {

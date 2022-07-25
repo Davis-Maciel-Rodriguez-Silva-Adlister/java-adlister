@@ -1,10 +1,15 @@
 package com.codeup.adlister.controllers;
 
+import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.dao.MySQLUsersDao;
+import com.codeup.adlister.models.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "controllers.ViewProfileServlet", urlPatterns = "/profile")
@@ -16,4 +21,33 @@ public class ViewProfileServlet extends HttpServlet {
         }
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+        // Getting current user info from session
+        User user = (User) request.getSession().getAttribute("user");
+
+        // Getting info that user wants changed
+        String changeUsernameTo = request.getParameter("changeUsernameTo");
+        String changeEmailTo = request.getParameter("changeEmailTo");
+        String changePasswordTo = request.getParameter("changePasswordTo");
+        String confirmPassword = request.getParameter("confirmPassword");
+
+        // Method for changing username by user id
+        DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
+
+        // Method for changing email by user id
+        DaoFactory.getUsersDao().changeEmail(user.getId(), changeEmailTo);
+
+        // Method for changing password by user id
+        boolean confirmPasswordCheck = false;
+        if(changePasswordTo.equals(confirmPassword)){
+            DaoFactory.getUsersDao().changePassword(user.getId(), changePasswordTo);
+        }
+
+
+    }
+
+
+
+
 }

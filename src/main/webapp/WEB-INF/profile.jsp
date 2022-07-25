@@ -10,6 +10,26 @@
 
     <div class="container">
         <h1>Welcome, ${sessionScope.user.username}!</h1>
+        <div>
+            <h2>Change/Update Profile Information</h2>
+            <form method="POST" action="/profile">
+                <label for="changeUsernameTo">Current Username: ${sessionScope.user.username}</label>
+                <input type="text" id="changeUsernameTo" placeholder="Change Username To">
+                <input type="submit" id="changeUsername" class="btn btn-primary btn-block" name="changeUsername" />
+            </form>
+            <form method="POST" action="/profile">
+                <label for="changeEmail">Current Email: ${sessionScope.user.email}</label>
+                <input type="text" id="changeEmailTo" placeholder="Change Email To">
+                <input type="submit" id="ChangeEmail" class="btn btn-primary btn-block" name="changeEmail" />
+            </form>
+            <form method="POST" action="/profile">
+                <label for="changePassword">Change Password</label>
+                <input type="password" id="changePasswordTo" placeholder="Change Password To">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                <input type="submit" id="changePassword" class="btn btn-primary btn-block" name="changePassword" />
+            </form>
+
+        </div>
     </div>
 
 </body>
