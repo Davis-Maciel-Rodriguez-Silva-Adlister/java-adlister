@@ -1,13 +1,19 @@
+package com.codeup.adlister.dao;
+
+import com.codeup.adlister.dao.Ads;
+import com.codeup.adlister.models.Ad;
 import com.mysql.cj.jdbc.PreparedStatement;
 import com.mysql.jdbc.Driver;
+import com.sun.tools.javac.util.List;
 
 import javax.servlet.jsp.jstl.core.Config;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // Searches by Ad strings
-public class MySQLAdsDao implements Ads{
+public class MySQLAdsDao implements Ads {
         private Connection connection = null;
 
         public MySQLAdsDao(Config config) {
@@ -20,14 +26,14 @@ public class MySQLAdsDao implements Ads{
                         );
                 } catch (SQLException e) {
                         System.out.println(e);
-                        throw new RuntimeException("error connecting to database", e);
+                        throw new RuntimeException("Error connecting to database", e);
                 }
         }
 @Override
 public List<Ad> searchAds(String searchTerm) {
         String query = "SELECT * FROM ads WHERE ads.title LIKE ? OR ads.description LIKE ?";
         try {
-        PreparedStatement stmt = connection.prepareStatement(query);
+        PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
         stmt.setString(1, "%" + searchTerm + "%");
       }catch(SQLException e){
 
@@ -63,8 +69,9 @@ public List<Ad> SearchAdsByCategory(Long id) {
         return createAdsWithUsersCategories(rs);
 
         } catch (SQLException e) {
-        e.printStackTrace();
-        public List<Ad> searchAdsByCategory(Long id) {
+                e.printStackTrace();
+                public List<Ad> searchAdsByCategory (Long id)
+        }
 //Search for by user Id is:
 @Override
 public List<Ad> showUserAds(Long id) {
@@ -75,22 +82,12 @@ public List<Ad> showUserAds(Long id) {
         stmt.setLong(1, id);
         ResultSet rs = stmt.executeQuery();
         return createAdsWithUsersFromResults(rs);
-        return createAdsWithUsersCategories(rs);
         } catch (SQLException e) {
         throw new RuntimeException("No user found in search", e);
        {
 
-@Override
-public void update(Ad ad) {
-        String query = "UPDATE ads SET title = ?, description = ? WHERE id = ?";
-        PreparedStatement stmt;
-        try {
-        stmt = connection.prepareStatement(query);
-        stmt.setString(1, ad.getTitle());
-        stmt.setString(2, ad.getDescription());
-        stmt.setLong(3, ad.getId());
-        stmt.setLong(3, ad.getCategoryId());
-        stmt.setLong(4, ad.getId());
-        stmt.executeUpdate();
-        } catch (SQLException e) {
-        throw new RuntimeE
+        private void createAdsFromResults() {
+        }
+
+        private void createAdsWithUsersCategories() {
+        }
