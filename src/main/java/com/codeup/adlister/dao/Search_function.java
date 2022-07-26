@@ -1,4 +1,28 @@
+import com.mysql.cj.jdbc.PreparedStatement;
+import com.mysql.jdbc.Driver;
+
+import javax.servlet.jsp.jstl.core.Config;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 // Searches by Ad strings
+public class MySQLAdsDao implements Ads{
+        private Connection connection = null;
+
+        public MySQLAdsDao(Config config) {
+                try {
+                        DriverManager.registerDriver(new Driver());
+                        connection = DriverManager.getConnection(
+                                config.getUrl(),
+                                config.getUser(),
+                                config.getPassword()
+                        );
+                } catch (SQLException e) {
+                        System.out.println(e);
+                        throw new RuntimeException("error connecting to database", e);
+                }
+        }
 @Override
 public List<Ad> searchAds(String searchTerm) {
         String query = "SELECT * FROM ads WHERE ads.title LIKE ? OR ads.description LIKE ?";
@@ -12,7 +36,7 @@ public List<Ad> searchAds(String searchTerm) {
 @Override
 public Ad findById(Long id) {
         String query = "SELECT * FROM ads JOIN users ON ads.user_id = users.id WHERE ads.id = ?";
-        PreparedStatement stmt;
+        java.sql.PreparedStatement stmt;
         try {
         stmt = connection.prepareStatement(query);
         stmt.setLong(1, id);
