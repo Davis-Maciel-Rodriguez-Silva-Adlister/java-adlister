@@ -3,6 +3,7 @@ package com.codeup.adlister.controllers;
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.dao.MySQLUsersDao;
 import com.codeup.adlister.models.User;
+import com.codeup.adlister.util.Password;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,9 +40,9 @@ public class ViewProfileServlet extends HttpServlet {
         DaoFactory.getUsersDao().changeEmail(user.getId(), changeEmailTo);
 
         // Method for changing password by user id
-        boolean confirmPasswordCheck = false;
         if(changePasswordTo.equals(confirmPassword)){
-            DaoFactory.getUsersDao().changePassword(user.getId(), changePasswordTo);
+            String hash = Password.hash(changePasswordTo);
+            DaoFactory.getUsersDao().changePassword(user.getId(), hash);
         }
 
 
