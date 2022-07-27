@@ -13,5 +13,5 @@ public interface Users {
 
     void changeEmail(Long id, String changeEmailTo);
 
-    void changePassword(Long id, String changePasswordTo);
+    void changePassword(User user, String changePasswordTo);
 }

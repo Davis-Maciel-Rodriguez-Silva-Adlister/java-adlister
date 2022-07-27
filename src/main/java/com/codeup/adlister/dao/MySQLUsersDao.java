@@ -2,6 +2,7 @@ package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.User;
 import com.codeup.adlister.util.Config;
+import com.codeup.adlister.util.Password;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
@@ -96,12 +97,13 @@ public class MySQLUsersDao implements Users {
     }
 
     @Override
-    public void changePassword(Long id, String changePasswordTo){
+    public void changePassword(User user, String changePasswordTo){
         String query = "UPDATE users SET password=? WHERE id =?";
         try{
+            String updatedPw = Password.hash(changePasswordTo);
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, changePasswordTo);
-            stmt.setLong(2, id);
+            stmt.setString(1, updatedPw);
+            stmt.setLong(2, user.getId());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
