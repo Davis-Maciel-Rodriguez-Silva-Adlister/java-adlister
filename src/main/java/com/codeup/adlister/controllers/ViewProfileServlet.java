@@ -31,26 +31,37 @@ public class ViewProfileServlet extends HttpServlet {
         String changeUsernameTo = request.getParameter("changeUsernameTo");
         String changeEmailTo = request.getParameter("changeEmailTo");
         String changePasswordTo = request.getParameter("changePasswordTo");
-        String confirmPassword = request.getParameter("confirmPassword");
+        String confirmPassword = request.getParameter("confirmPasswordTo");
 
         // Method for changing username by user id
         if(request.getParameter("changeUsernameTo") != null) {
-            DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
-            response.sendRedirect("/profile");
-        }
-        // Method for changing email by user id
-        if(request.getParameter("changeEmailTo") != null) {
-            DaoFactory.getUsersDao().changeEmail(user.getId(), changeEmailTo);
-            response.sendRedirect("/profile");
-        }
-        // Method for changing password by user id
-        if(request.getParameter("changePasswordTo") != null) {
-            if (changePasswordTo.equals(confirmPassword)) {
-                String hash = Password.hash(changePasswordTo);
-                DaoFactory.getUsersDao().changePassword(user.getId(), hash);
+            if(!changeUsernameTo.isEmpty()) {
+                DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
+                response.sendRedirect("/profile");
+            }else{
                 response.sendRedirect("/profile");
             }
         }
+        // Method for changing email by user id
+        if(request.getParameter("changeEmailTo") != null) {
+            if(!changeEmailTo.isEmpty()) {
+                DaoFactory.getUsersDao().changeEmail(user.getId(), changeEmailTo);
+                response.sendRedirect("/profile");
+            }else{
+                response.sendRedirect("/profile");
+            }
+        }
+        // Method for changing password by user id
+        if(request.getParameter("changePasswordTo") != null) {
+            if (changePasswordTo.equals(confirmPassword) && !changePasswordTo.isEmpty()) {
+                DaoFactory.getUsersDao().changePassword(user, changePasswordTo);
+                response.sendRedirect("/profile");
+            }else{
+                response.sendRedirect("/profile");
+            }
+        }
+
+
 
     }
 
