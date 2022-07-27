@@ -10,6 +10,15 @@
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
     <div class="container">
         <h1>Welcome to the Adlister!</h1>
+        <div class="btn-group">
+            <a href="/login"><div class="btn btn-primary btn-block">Login</div></a>
+            <a href="/ads"><div class="btn btn-primary btn-block">See all ads</div></a>
+        </div>
+<%--        <ul>--%>
+<%--        <c:forEach var="category" items="${categories}">--%>
+<%--            <li>${category}</li>--%>
+<%--        </c:forEach>--%>
+<%--        </ul>--%>
     </div>
 </body>
 </html>
