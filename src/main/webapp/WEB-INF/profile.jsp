@@ -11,11 +11,11 @@
 
     <div class="container">
         <h1>Welcome, ${sessionScope.user.username}!</h1>
-            <div class="form-control">
+            <div>
                 <h2>Change/Update Profile Information</h2>
                 <div class="col-md-4">
                 <form method="POST" action="/profile">
-                    <label for="changeUsernameTo">Current Username: ${sessionScope.user.username}</label>
+                    <label for="changeUsernameTo">Current Username: ${sessionScope.user.username}</label><br>
                     <input type="text" name="changeUsernameTo" id="changeUsernameTo" placeholder="Change Username To">
                     <input type="submit" id="changeUsername" class="btn btn-primary btn-block" name="changeUsername" />
                 </form>
@@ -35,6 +35,16 @@
                 </form>
                 </div>
             </div>
+        <div>
+            <c:forEach var="ad" items="${ads}">
+                <div>
+                    <h2>${ad.title}</h2>
+                    <p>${ad.description}</p>
+                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Delete</button>
+                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Update Ad</button>
+                </div>
+            </c:forEach>
+        </div>
     </div>
 
 </body>

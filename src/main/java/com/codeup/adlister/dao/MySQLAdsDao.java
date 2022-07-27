@@ -4,9 +4,6 @@ import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +60,20 @@ public class MySQLAdsDao implements Ads {
             stmt = connection.prepareStatement(query);
             stmt.setString(1, "%" + searchTerm + "%");
             stmt.setString(2, "%" + searchTerm + "%");
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in search");
+        }
+    }
+
+    @Override
+    public List<Ad> filterByUser(Long id) {
+        PreparedStatement stmt = null;
+        String query = "SELECT * FROM ads WHERE ads.user_id = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {

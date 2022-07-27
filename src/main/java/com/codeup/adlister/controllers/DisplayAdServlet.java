@@ -16,16 +16,18 @@ import java.io.IOException;
 @WebServlet(name="DisplayAdServlet", urlPatterns = "/view-ad")
 public class DisplayAdServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (request.getSession().getAttribute("user") == null) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             response.sendRedirect("/login");
             return;
         }
         String ad = request.getParameter("adName");
         request.setAttribute("ads", DaoFactory.getAdsDao().search(ad));
+        request.setAttribute("user", user);
         request.getRequestDispatcher("/WEB-INF/view-ad.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
-
+        User user = (User) request.getSession().getAttribute("user");
     }
 }
