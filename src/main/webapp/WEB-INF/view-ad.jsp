@@ -10,16 +10,16 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/partials/head.jsp">
-        <jsp:param name="Ad" value="Ad" />
+        <jsp:param name="title" value="Ad" />
     </jsp:include>
 </head>
 <body>
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
     <div class="container col-md-12">
-        <h2><c:out value="${ad.title}"></c:out></h2>
-        <p><c:out value="${ad.description}"></c:out></p>
-        <br>
-
+        <c:forEach var="ad" items="${ads}">
+        <h2>${ad.title}</h2>
+        <p>${ad.description}</p>
+        </c:forEach>
     </div>
 
 </body>

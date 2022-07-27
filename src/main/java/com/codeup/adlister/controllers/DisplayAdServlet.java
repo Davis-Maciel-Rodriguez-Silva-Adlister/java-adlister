@@ -20,6 +20,8 @@ public class DisplayAdServlet extends HttpServlet{
             response.sendRedirect("/login");
             return;
         }
+        String ad = request.getParameter("adName");
+        request.setAttribute("ads", DaoFactory.getAdsDao().search(ad));
         request.getRequestDispatcher("/WEB-INF/view-ad.jsp").forward(request, response);
     }
 
