@@ -86,4 +86,46 @@ public class MySQLAdsDao implements Ads {
         }
         return ads;
     }
+
+    public void deleteAd(long id) {
+        PreparedStatement stmt = null;
+        String query = "DELETE FROM ads WHERE ads.id = ?";
+        try {
+           stmt = connection.prepareStatement(query);
+           stmt.setLong(1, id);
+           stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in deletion");
+        }
+    }
+
+    public void changeTitle(long id,  String newTitle) {
+        PreparedStatement stmt = null;
+        String query = "UPDATE ads SET title = ? WHERE id= ?";
+                try{
+                    stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    stmt.setLong(2, id);
+                    stmt.setString(1, newTitle);
+                    stmt.executeUpdate();
+                    ResultSet rs = stmt.getGeneratedKeys();
+                    rs.next();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error updating Title");
+                }
+    }
+
+    public void changeDescription(long id,  String newDescription) {
+        PreparedStatement stmt = null;
+        String query = "UPDATE ads SET description = ? WHERE id= ?";
+                try{
+                    stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    stmt.setLong(2, id);
+                    stmt.setString(1, newDescription);
+                    stmt.executeUpdate();
+                    ResultSet rs = stmt.getGeneratedKeys();
+                    rs.next();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error updating Description");
+                }
+    }
 }

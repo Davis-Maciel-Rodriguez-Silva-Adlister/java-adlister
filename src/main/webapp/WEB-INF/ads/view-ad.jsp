@@ -19,6 +19,10 @@
         <c:forEach var="ad" items="${ads}">
         <h2>${ad.title}</h2>
         <p>${ad.description}</p>
+            <c:if test="userid = userid">
+                <input type="button" value="Update Ad">
+                <input type="button" value="Delete Ad">
+            </c:if>
         </c:forEach>
     </div>
 
