@@ -4,9 +4,6 @@ import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +67,20 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public List<Ad> filterByUser(Long id) {
+        PreparedStatement stmt = null;
+        String query = "SELECT * FROM ads WHERE ads.user_id = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in search");
+        }
+    }
+
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
@@ -85,5 +96,47 @@ public class MySQLAdsDao implements Ads {
             ads.add(extractAd(rs));
         }
         return ads;
+    }
+
+    public void deleteAd(long id) {
+        PreparedStatement stmt = null;
+        String query = "DELETE FROM ads WHERE ads.id = ?";
+        try {
+           stmt = connection.prepareStatement(query);
+           stmt.setLong(1, id);
+           stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error in deletion");
+        }
+    }
+
+    public void changeTitle(long id,  String newTitle) {
+        PreparedStatement stmt = null;
+        String query = "UPDATE ads SET title = ? WHERE id= ?";
+                try{
+                    stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    stmt.setLong(2, id);
+                    stmt.setString(1, newTitle);
+                    stmt.executeUpdate();
+                    ResultSet rs = stmt.getGeneratedKeys();
+                    rs.next();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error updating Title");
+                }
+    }
+
+    public void changeDescription(long id,  String newDescription) {
+        PreparedStatement stmt = null;
+        String query = "UPDATE ads SET description = ? WHERE id= ?";
+                try{
+                    stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    stmt.setLong(2, id);
+                    stmt.setString(1, newDescription);
+                    stmt.executeUpdate();
+                    ResultSet rs = stmt.getGeneratedKeys();
+                    rs.next();
+                } catch (SQLException e) {
+                    throw new RuntimeException("Error updating Description");
+                }
     }
 }

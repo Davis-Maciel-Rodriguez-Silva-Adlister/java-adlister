@@ -36,6 +36,16 @@
                 </form>
                 </div>
             </div>
+        <div>
+            <c:forEach var="ad" items="${ads}">
+                <div>
+                    <h2>${ad.title}</h2>
+                    <p>${ad.description}</p>
+                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Delete</button>
+                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Update Ad</button>
+                </div>
+            </c:forEach>
+        </div>
     </div>
 
 </body>
