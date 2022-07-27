@@ -7,7 +7,7 @@ public class DaoFactory {
 
     public static Ads getAdsDao() {
         if (adsDao == null) {
-            adsDao = new MySQLAdsDao(config);
+            adsDao = new SearchFunction(config);
         }
         return adsDao;
     }
