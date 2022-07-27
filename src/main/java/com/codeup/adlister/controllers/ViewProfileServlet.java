@@ -23,7 +23,7 @@ public class ViewProfileServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Getting current user info from session
         User user = (User) request.getSession().getAttribute("user");
 
@@ -34,17 +34,24 @@ public class ViewProfileServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         // Method for changing username by user id
-        DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
-
-        // Method for changing email by user id
-        DaoFactory.getUsersDao().changeEmail(user.getId(), changeEmailTo);
-
-        // Method for changing password by user id
-        if(changePasswordTo.equals(confirmPassword)){
-            String hash = Password.hash(changePasswordTo);
-            DaoFactory.getUsersDao().changePassword(user.getId(), hash);
+        if(request.getParameter("changeUsernameTo") != null) {
+            User updatedUser = DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
+            request.getSession().setAttribute("user", updatedUser);
+            response.sendRedirect("/profile");
         }
-
+        // Method for changing email by user id
+        if(request.getParameter("changeEmailTo") != null) {
+            DaoFactory.getUsersDao().changeEmail(user.getId(), changeEmailTo);
+            response.sendRedirect("/profile");
+        }
+        // Method for changing password by user id
+        if(request.getParameter("changePasswordTo") != null) {
+            if (changePasswordTo.equals(confirmPassword)) {
+                String hash = Password.hash(changePasswordTo);
+                DaoFactory.getUsersDao().changePassword(user.getId(), hash);
+                response.sendRedirect("/profile");
+            }
+        }
 
     }
 

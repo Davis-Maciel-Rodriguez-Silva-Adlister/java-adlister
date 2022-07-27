@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: alexrodriguez
@@ -14,13 +15,12 @@
 </head>
 <body>
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
-        <div class="container">
-            <div class="ad-title">
-                <c: >
-                <h2></h2>
-                </c:>
-            </div>
-        </div>
+    <div class="container col-md-12">
+        <h2><c:out value="${ad.title}"></c:out></h2>
+        <p><c:out value="${ad.description}"></c:out></p>
+        <br>
+
+    </div>
 
 </body>
 </html>
