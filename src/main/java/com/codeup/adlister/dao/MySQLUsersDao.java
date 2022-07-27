@@ -36,6 +36,18 @@ public class MySQLUsersDao implements Users {
     }
 
     @Override
+    public User findById(Long id) {
+        String query = "SELECT * FROM users WHERE id = ? LIMIT 1";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            return extractUser(stmt.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding a user by username", e);
+        }
+    }
+
+    @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
         try {
@@ -49,6 +61,53 @@ public class MySQLUsersDao implements Users {
             return rs.getLong(1);
         } catch (SQLException e) {
             throw new RuntimeException("Error creating new user", e);
+        }
+    }
+    @Override
+    public User changeUsername(Long id, String changeUsernameTo){
+        String query = "UPDATE users SET username=? WHERE id =?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, changeUsernameTo);
+            stmt.setLong(2, id);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return extractUser(rs);
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error!!", e);
+
+        }
+    }
+
+    @Override
+    public void changeEmail(Long id, String changeEmailTo){
+        String query = "UPDATE users SET email=? WHERE id =?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, changeEmailTo);
+            stmt.setLong(2, id);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+        }catch(SQLException e){
+            throw new RuntimeException("Error!!", e);
+        }
+    }
+
+    @Override
+    public void changePassword(Long id, String changePasswordTo){
+        String query = "UPDATE users SET password=? WHERE id =?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, changePasswordTo);
+            stmt.setLong(2, id);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+        }catch(SQLException e){
+            throw new RuntimeException("Error!!", e);
         }
     }
 
