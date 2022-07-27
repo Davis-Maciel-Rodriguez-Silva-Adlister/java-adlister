@@ -24,7 +24,7 @@ public class DisplayAdServlet extends HttpServlet{
         String ad = request.getParameter("adName");
         request.setAttribute("ads", DaoFactory.getAdsDao().search(ad));
         request.setAttribute("user", user);
-        request.getRequestDispatcher("/WEB-INF/view-ad.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ads/view-ad.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
