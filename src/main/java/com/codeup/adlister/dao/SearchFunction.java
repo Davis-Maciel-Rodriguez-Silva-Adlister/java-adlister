@@ -1,24 +1,22 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
-import com.mysql.cj.jdbc.PreparedStatement;
+import com.codeup.adlister.util.Config;
 import com.mysql.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 // Searches by Ad strings
 public class SearchFunction{
     private Connection connection = null;
-    private Config config = new Config();
 
     public SearchFunction() {
         try {
             DriverManager.registerDriver(new Driver());
+            Config config = new Config();
             connection = DriverManager.getConnection(
                     config.getUrl(),
                     config.getUser(),
@@ -54,8 +52,8 @@ public class SearchFunction{
         );
     }
 
-    private java.util.List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
-        java.util.List<Ad> ads = new ArrayList<>();
+    private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
+        List<Ad> ads = new ArrayList<>();
         while (rs.next()) {
             ads.add(extractAd(rs));
         }
