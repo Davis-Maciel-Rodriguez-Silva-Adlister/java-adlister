@@ -35,8 +35,7 @@ public class ViewProfileServlet extends HttpServlet {
 
         // Method for changing username by user id
         if(request.getParameter("changeUsernameTo") != null) {
-            User updatedUser = DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
-            request.getSession().setAttribute("user", updatedUser);
+            DaoFactory.getUsersDao().changeUsername(user.getId(), changeUsernameTo);
             response.sendRedirect("/profile");
         }
         // Method for changing email by user id

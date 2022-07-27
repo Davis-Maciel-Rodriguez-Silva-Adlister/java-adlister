@@ -9,7 +9,7 @@ public interface Users {
 
     Long insert(User user);
 
-    User changeUsername(Long id, String changeUsernameTo);
+    void changeUsername(Long id, String changeUsernameTo);
 
     void changeEmail(Long id, String changeEmailTo);
 

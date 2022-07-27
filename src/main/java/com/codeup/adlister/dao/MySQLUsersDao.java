@@ -64,7 +64,7 @@ public class MySQLUsersDao implements Users {
         }
     }
     @Override
-    public User changeUsername(Long id, String changeUsernameTo){
+    public void changeUsername(Long id, String changeUsernameTo){
         String query = "UPDATE users SET username=? WHERE id =?";
         try{
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -73,7 +73,6 @@ public class MySQLUsersDao implements Users {
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
-            return extractUser(rs);
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Error!!", e);
