@@ -12,6 +12,14 @@
 <div class="container">
     <h1>Here Are all the ads!</h1>
 
+    <div class="form-control">
+        <form method="post" action="/ads">
+            <label for="search">Search:</label>
+            <input type="search" id="search" name="search" placeholder="What would you like to see?">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
     <c:forEach var="ad" items="${ads}">
         <div class="col-md-6">
             <h2>${ad.title}</h2>
