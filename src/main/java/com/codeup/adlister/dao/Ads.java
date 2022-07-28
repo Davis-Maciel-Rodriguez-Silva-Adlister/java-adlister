@@ -18,4 +18,10 @@ public interface Ads {
     List<Ad> filterByUser(long id);
 
     Ad getAd(long id);
+
+    void deleteAd(long id);
+
+    void changeDescription(long id, String newDescription);
+
+    void changeTitle(long id, String newTitle);
 }

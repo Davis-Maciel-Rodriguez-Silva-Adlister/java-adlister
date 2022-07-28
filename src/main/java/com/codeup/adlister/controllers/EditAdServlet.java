@@ -29,9 +29,12 @@ public class EditAdServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         String newTitle = req.getParameter("title");
         String newDescription = req.getParameter("description");
-        System.out.println(newTitle);
-        System.out.println(newDescription);
-        System.out.println(req.getParameter("edit"));
-        resp.sendRedirect("/ads");
+        if(req.getParameter("delete") != null) {
+            DaoFactory.getAdsDao().deleteAd(Long.parseLong(req.getParameter("delete")));
+        } else if (req.getParameter("edit") != null) {
+            DaoFactory.getAdsDao().changeTitle(Long.parseLong(req.getParameter("edit")), newTitle);
+            DaoFactory.getAdsDao().changeDescription(Long.parseLong(req.getParameter("edit")), newDescription);
+        }
+        resp.sendRedirect("/profile");
     }
 }

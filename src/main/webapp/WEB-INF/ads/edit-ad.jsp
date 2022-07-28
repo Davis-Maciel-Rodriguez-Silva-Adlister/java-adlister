@@ -24,9 +24,8 @@
             <input type="text" name="description" id="description" value="${ad.description}">
         </div>
         <div class="btn-group">
-                <input type="submit" class="btn btn-primary btn-block" name="edit" value="Submit Updates">
-                <input type="submit" class="btn btn-primary btn-block" name="edit" value="Delete Ad">
-
+            <button type="submit" class="btn btn-primary btn-block" id="change" name="edit" value="${ad.id}">Submit Changes</button>
+            <button type="submit" class="btn btn-primary btn-block" id="delete" name="delete" value="${ad.id}">Delete Ad</button>
         </div>
     </form>
 </body>

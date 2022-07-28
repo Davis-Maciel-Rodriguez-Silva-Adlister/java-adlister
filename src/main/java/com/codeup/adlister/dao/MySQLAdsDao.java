@@ -118,19 +118,20 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
+    @Override
     public void deleteAd(long id) {
         PreparedStatement stmt = null;
-        String query = "DELETE FROM ads WHERE ads.id = ?";
+        String query = "DELETE FROM ads WHERE id = ?";
         try {
-           stmt = connection.prepareStatement(query);
+           stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
            stmt.setLong(1, id);
-           stmt.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Error in deletion");
         }
     }
 
-    public void changeTitle(long id,  String newTitle) {
+    @Override
+    public void changeTitle(long id, String newTitle) {
         PreparedStatement stmt = null;
         String query = "UPDATE ads SET title = ? WHERE id= ?";
                 try{
@@ -145,6 +146,7 @@ public class MySQLAdsDao implements Ads {
                 }
     }
 
+    @Override
     public void changeDescription(long id,  String newDescription) {
         PreparedStatement stmt = null;
         String query = "UPDATE ads SET description = ? WHERE id= ?";
