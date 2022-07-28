@@ -35,13 +35,13 @@
                 </form>
                 </div>
             </div>
+        <h2>Your Ads</h2>
         <div>
             <c:forEach var="ad" items="${ads}">
                 <div>
                     <h2>${ad.title}</h2>
                     <p>${ad.description}</p>
-                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Delete</button>
-                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Update Ad</button>
+                    <a href="/ads/edit-ad?adId=${ad.id}"><button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Edit Ad</button></a>
                 </div>
             </c:forEach>
         </div>

@@ -5,7 +5,7 @@ import com.codeup.adlister.models.Ad;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAdsDao implements Ads {
+public abstract class ListAdsDao implements Ads {
     private List<Ad> ads;
 
     public List<Ad> all() {
@@ -33,7 +33,7 @@ public class ListAdsDao implements Ads {
     }
 
     @Override
-    public List<Ad> filterByUser(Long id) {
+    public List<Ad> filterByUser(long id) {
         return null;
     }
 

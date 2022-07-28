@@ -68,7 +68,7 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public List<Ad> filterByUser(Long id) {
+    public List<Ad> filterByUser(long id) {
         PreparedStatement stmt = null;
         String query = "SELECT * FROM ads WHERE ads.user_id = ?";
         try {
@@ -78,6 +78,27 @@ public class MySQLAdsDao implements Ads {
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error in search");
+        }
+    }
+
+    @Override
+    public Ad getAd(long id) {
+        System.out.println(id);
+        PreparedStatement stmt = null;
+        String query = "SELECT * FROM ads WHERE id = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return new Ad (
+                    rs.getLong("id"),
+                    rs.getLong("user_id"),
+                    rs.getString("title"),
+                    rs.getString("description")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ad");
         }
     }
 

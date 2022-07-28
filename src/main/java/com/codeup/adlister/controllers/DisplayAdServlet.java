@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name="DisplayAdServlet", urlPatterns = "/view-ad")
+@WebServlet(name="DisplayAdServlet", urlPatterns = "/ads/view-ad")
 public class DisplayAdServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = (User) request.getSession().getAttribute("user");
@@ -24,7 +24,7 @@ public class DisplayAdServlet extends HttpServlet{
         String ad = request.getParameter("adName");
         request.setAttribute("ads", DaoFactory.getAdsDao().search(ad));
         request.setAttribute("user", user);
-        request.getRequestDispatcher("/WEB-INF/view-ad.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ads/view-ad.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
