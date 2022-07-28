@@ -16,6 +16,7 @@
 <body>
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
     <h1>Edit or Delete ${ad.title}</h1>
+    <form action="/ads/edit-ad" method="post">
         <div class="container">
             <label for="title">Title:</label>
             <input type="text" name="title" id="title" value="${ad.title}">
@@ -23,12 +24,10 @@
             <input type="text" name="description" id="description" value="${ad.description}">
         </div>
         <div class="btn-group">
-            <form action="/ads/edit-ad" method="post">
-                <input type="submit" class="btn btn-primary btn-block" name="edit${ad.id}" value="Submit Updates">
-            </form>
-            <form action="/ads/edit-ad" method="post">
-                <input type="submit" formmethod="post" class="btn btn-primary btn-block" name="delete${ad.id}" value="Delete Ad">
-            </form>
+                <input type="submit" class="btn btn-primary btn-block" name="edit" value="Submit Updates">
+                <input type="submit" class="btn btn-primary btn-block" name="edit" value="Delete Ad">
+
         </div>
+    </form>
 </body>
 </html>

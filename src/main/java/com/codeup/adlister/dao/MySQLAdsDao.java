@@ -83,7 +83,6 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public Ad getAd(long id) {
-        System.out.println(id);
         PreparedStatement stmt = null;
         String query = "SELECT * FROM ads WHERE id = ?";
         try {

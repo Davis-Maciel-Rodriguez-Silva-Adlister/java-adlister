@@ -29,16 +29,9 @@ public class EditAdServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         String newTitle = req.getParameter("title");
         String newDescription = req.getParameter("description");
-        boolean delete;
-        if(req.getParameter("delete") != null) {
-            delete = true;
-        } else {
-            delete = false;
-        }
-        System.out.println(user);
         System.out.println(newTitle);
         System.out.println(newDescription);
-        System.out.println(delete);
+        System.out.println(req.getParameter("edit"));
         resp.sendRedirect("/ads");
     }
 }
