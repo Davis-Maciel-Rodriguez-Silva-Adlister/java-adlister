@@ -36,13 +36,14 @@
                 </form>
                 </div>
             </div>
+        <h2>Your Ads</h2>
+        <a href="/ads/create"><button type="button" class="btn-block btn btn-primary" id="newAd" name="newAd">Create Ad</button></a>
         <div>
             <c:forEach var="ad" items="${ads}">
                 <div>
                     <h2>${ad.title}</h2>
                     <p>${ad.description}</p>
-                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Delete</button>
-                    <button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Update Ad</button>
+                    <a href="/ads/edit-ad?adId=${ad.id}"><button type="submit" class="btn btn-primary btn-bloc" name="adId=${ad.id}">Edit Ad</button></a>
                 </div>
             </c:forEach>
         </div>

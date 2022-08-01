@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name="DisplayAdServlet", urlPatterns = "/view-ad")
+@WebServlet(name="DisplayAdServlet", urlPatterns = "/ads/view-ad")
 public class DisplayAdServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = (User) request.getSession().getAttribute("user");

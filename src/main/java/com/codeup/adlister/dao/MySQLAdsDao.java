@@ -68,7 +68,7 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public List<Ad> filterByUser(Long id) {
+    public List<Ad> filterByUser(long id) {
         PreparedStatement stmt = null;
         String query = "SELECT * FROM ads WHERE ads.user_id = ?";
         try {
@@ -78,6 +78,26 @@ public class MySQLAdsDao implements Ads {
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error in search");
+        }
+    }
+
+    @Override
+    public Ad getAd(long id) {
+        PreparedStatement stmt = null;
+        String query = "SELECT * FROM ads WHERE id = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return new Ad (
+                    rs.getLong("id"),
+                    rs.getLong("user_id"),
+                    rs.getString("title"),
+                    rs.getString("description")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ad");
         }
     }
 
@@ -98,19 +118,31 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
+    @Override
     public void deleteAd(long id) {
         PreparedStatement stmt = null;
-        String query = "DELETE FROM ads WHERE ads.id = ?";
+        String catQuery = "DELETE FROM ads_categories WHERE ad_id = ?";
+        String adQuery = "DELETE FROM ads WHERE id = ?";
         try {
-           stmt = connection.prepareStatement(query);
-           stmt.setLong(1, id);
-           stmt.execute();
+            stmt = connection.prepareStatement(catQuery);
+            stmt.setLong(1,id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        try {
+           stmt = connection.prepareStatement(adQuery);
+           stmt.setLong(1, id);
+           stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException("Error in deletion");
         }
     }
 
-    public void changeTitle(long id,  String newTitle) {
+    @Override
+    public void changeTitle(long id, String newTitle) {
         PreparedStatement stmt = null;
         String query = "UPDATE ads SET title = ? WHERE id= ?";
                 try{
@@ -125,6 +157,7 @@ public class MySQLAdsDao implements Ads {
                 }
     }
 
+    @Override
     public void changeDescription(long id,  String newDescription) {
         PreparedStatement stmt = null;
         String query = "UPDATE ads SET description = ? WHERE id= ?";
