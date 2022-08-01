@@ -36,6 +36,7 @@
                 </div>
             </div>
         <h2>Your Ads</h2>
+        <a href="/ads/create"><button type="button" class="btn-block btn btn-primary" id="newAd" name="newAd">Create Ad</button></a>
         <div>
             <c:forEach var="ad" items="${ads}">
                 <div>
